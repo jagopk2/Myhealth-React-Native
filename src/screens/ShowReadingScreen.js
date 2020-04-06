@@ -86,11 +86,11 @@ const ShowReadingScreen = ({ navigation }) => {
           }}
           rightComponent={
             <MaterialCommunityIcons
-              name="home"
+              name="keyboard-backspace"
               color={"black"}
               size={30}
               onPress={() => {
-                navigation.toggleDrawer();
+                navigation.navigate("UserHealthMain");
               }}
             />
           }

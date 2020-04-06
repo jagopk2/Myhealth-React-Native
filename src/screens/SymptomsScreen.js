@@ -4,11 +4,11 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 import { Corpus, Similarity } from "tiny-tfidf";
 import trackerApi from "../Api/tracker";
-import Toast from "react-native-simple-toast";
+// import Toast from "react-native-simple-toast";
 import MultiSelect from "react-native-multiple-select";
 import { showMessage, hideMessage } from "react-native-flash-message";
 import ProgressLoader from "rn-progress-loader";
@@ -20,7 +20,7 @@ import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import {
   widthPercentageToDP as wp,
-  heightPercentageToDP as hp
+  heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
 const fetchSymptoms = async (setSymptoms, setError) => {
@@ -32,7 +32,7 @@ const fetchSymptoms = async (setSymptoms, setError) => {
   } catch (error) {
     console.log("Error Fetching Symptoms", error);
     setError(true);
-    Toast.show("Error Fetching Symptoms");
+    // Toast.show("Error Fetching Symptoms");
   }
 };
 const fetchDocuments = async (setDocuments, setError) => {
@@ -44,7 +44,7 @@ const fetchDocuments = async (setDocuments, setError) => {
   } catch (error) {
     console.log("Error Fetching getDiseaseSymptoms", error);
     setError(true);
-    Toast.show("Error Fetching getDiseaseSymptoms");
+    // Toast.show("Error Fetching getDiseaseSymptoms");
   }
 };
 
@@ -52,7 +52,7 @@ const predict = (items, data, navigation) => {
   const desease = [];
   const symp = [];
   if (data.length) {
-    data.forEach(element => {
+    data.forEach((element) => {
       // console.log("elem", element);
       desease.push(element.name);
       symp.push(element.symptoms_list);
@@ -66,7 +66,7 @@ const predict = (items, data, navigation) => {
     const deseases = corpus.getDocumentIdentifiers();
     const resultsValue = [];
     const resultsDesease = [];
-    deseases.forEach(desease => {
+    deseases.forEach((desease) => {
       if (desease !== "queury") {
         const predicted_value = Similarity.cosineSimilarity(
           queury_vector,
@@ -83,13 +83,13 @@ const predict = (items, data, navigation) => {
       labels: resultsDesease,
       datasets: [
         {
-          data: resultsValue
-        }
-      ]
+          data: resultsValue,
+        },
+      ],
     };
     navigation.navigate("SymptomsDetail", {
       // data: null
-      data: chart_data
+      data: chart_data,
     });
   } else {
     console.log("No Data for Corpus Creation");
@@ -113,7 +113,7 @@ const SymptomsScreen = ({ navigation }) => {
       "helvari-italic": require("../../assets/fonts/helvariitalic.ttf"),
       "helvari-italic-bold": require("../../assets/fonts/helvaribolditalic.ttf"),
       "helvari-medium": require("../../assets/fonts/helvarimedium.ttf"),
-      "helvari-medium-italic": require("../../assets/fonts/helvarimediumitalic.ttf")
+      "helvari-medium-italic": require("../../assets/fonts/helvarimediumitalic.ttf"),
     });
   };
 
@@ -157,7 +157,7 @@ const SymptomsScreen = ({ navigation }) => {
             }
             centerComponent={{
               text: "Symptoms",
-              style: { color: "black", fontFamily: "helvari-bold" }
+              style: { color: "black", fontFamily: "helvari-bold" },
             }}
             rightComponent={
               <MaterialCommunityIcons
@@ -173,12 +173,15 @@ const SymptomsScreen = ({ navigation }) => {
               backgroundColor: theme.colorNav,
               justifyContent: "space-around",
               paddingTop: 0,
-              height: hp("10%")
+              height: hp("10%"),
             }}
           />
+          <Text h4 style={styles.mainHeading}>
+            Select Symtoms from List
+          </Text>
           <MultiSelect
             styleMainWrapper={{
-              marginTop: hp("1%")
+              marginTop: hp("1%"),
             }}
             hideTags
             styleRowList={{ marginVertical: 2 }}
@@ -189,17 +192,17 @@ const SymptomsScreen = ({ navigation }) => {
             hideSubmitButton={false}
             items={symptoms}
             uniqueKey="name"
-            ref={component => {
+            ref={(component) => {
               setMultiSelect(component);
             }}
-            onSelectedItemsChange={selItems => {
+            onSelectedItemsChange={(selItems) => {
               // console.log(selItems);
               setSelectedItems(selItems);
             }}
             selectedItems={selectedItems}
             selectText="Pick Symptoms"
             searchInputPlaceholderText="Search Symptoms..."
-            onChangeInput={text => console.log(text)}
+            onChangeInput={(text) => console.log(text)}
             //altFontFamily="ProximaNova-Light"
             tagRemoveIconColor="red"
             tagBorderColor="black"
@@ -279,8 +282,13 @@ const SymptomsScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: "white"
-  }
+    backgroundColor: "white",
+  },
+  mainHeading: {
+    marginTop: hp("2%"),
+    textAlign: "center",
+    marginBottom: hp("2%"),
+  },
 });
 
 export default SymptomsScreen;

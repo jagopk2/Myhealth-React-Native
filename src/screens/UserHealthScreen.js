@@ -65,7 +65,7 @@ const UserHealthScreen = ({ navigation }) => {
             color={"black"}
             size={30}
             onPress={() => {
-              navigation.toggleDrawer();
+              navigation.navigate("Homepage");
             }}
           />
         }

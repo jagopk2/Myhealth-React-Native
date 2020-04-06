@@ -12,13 +12,13 @@ import {
   Text,
   Button,
   ThemeContext,
-  Card
+  Card,
 } from "react-native-elements";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import {
   widthPercentageToDP as wp,
-  heightPercentageToDP as hp
+  heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
 const SymptomsDetailScreen = ({ navigation }) => {
@@ -32,7 +32,7 @@ const SymptomsDetailScreen = ({ navigation }) => {
       "helvari-italic": require("../../assets/fonts/helvariitalic.ttf"),
       "helvari-italic-bold": require("../../assets/fonts/helvaribolditalic.ttf"),
       "helvari-medium": require("../../assets/fonts/helvarimedium.ttf"),
-      "helvari-medium-italic": require("../../assets/fonts/helvarimediumitalic.ttf")
+      "helvari-medium-italic": require("../../assets/fonts/helvarimediumitalic.ttf"),
     });
   };
   useEffect(() => {
@@ -57,13 +57,13 @@ const SymptomsDetailScreen = ({ navigation }) => {
     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
     labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
     style: {
-      borderRadius: 16
+      borderRadius: 16,
     },
     propsForDots: {
       r: "6",
       strokeWidth: "2",
-      stroke: "#ffa726"
-    }
+      stroke: "#ffa726",
+    },
   };
   return (
     <>
@@ -90,15 +90,15 @@ const SymptomsDetailScreen = ({ navigation }) => {
             }
             centerComponent={{
               text: "Symptoms Details",
-              style: { color: "black", fontFamily: "helvari-bold" }
+              style: { color: "black", fontFamily: "helvari-bold" },
             }}
             rightComponent={
               <MaterialCommunityIcons
-                name="home"
+                name="keyboard-backspace"
                 color={"black"}
                 size={30}
                 onPress={() => {
-                  navigation.toggleDrawer();
+                  navigation.navigate("SymptomsMain");
                 }}
               />
             }
@@ -106,7 +106,7 @@ const SymptomsDetailScreen = ({ navigation }) => {
               backgroundColor: theme.colorNav,
               justifyContent: "space-around",
               paddingTop: 0,
-              height: hp("10%")
+              height: hp("10%"),
             }}
           />
           <Text style={styles.mainHeading} h3>
@@ -138,7 +138,7 @@ const SymptomsDetailScreen = ({ navigation }) => {
                     <Circle cx={center.x} cy={center.y} r="10" fill="blue" />
                   )}
                 >
-                  {fill => <Text>{parseInt(item).toString() + " %"}</Text>}
+                  {(fill) => <Text>{parseInt(item).toString() + " %"}</Text>}
                 </AnimatedCircularProgress>
               </Card>
             );
@@ -173,13 +173,13 @@ const SymptomsDetailScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   mainHeading: {
     marginTop: hp("2%"),
     textAlign: "center",
-    marginBottom: hp("2%")
-  }
+    marginBottom: hp("2%"),
+  },
 });
 
 export default SymptomsDetailScreen;

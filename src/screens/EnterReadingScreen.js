@@ -14,7 +14,7 @@ import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import {
   widthPercentageToDP as wp,
-  heightPercentageToDP as hp
+  heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
 const EnterReadingScreen = ({ navigation }) => {
@@ -23,7 +23,7 @@ const EnterReadingScreen = ({ navigation }) => {
     state,
     addRecord,
     clearErrorMessage,
-    clearSuccessMessage
+    clearSuccessMessage,
     //state: { successMessage, errorMessage }
   } = useContext(UserHealthContext);
   const { theme } = useContext(ThemeContext);
@@ -35,7 +35,7 @@ const EnterReadingScreen = ({ navigation }) => {
       "helvari-italic": require("../../assets/fonts/helvariitalic.ttf"),
       "helvari-italic-bold": require("../../assets/fonts/helvaribolditalic.ttf"),
       "helvari-medium": require("../../assets/fonts/helvarimedium.ttf"),
-      "helvari-medium-italic": require("../../assets/fonts/helvarimediumitalic.ttf")
+      "helvari-medium-italic": require("../../assets/fonts/helvarimediumitalic.ttf"),
     });
   };
 
@@ -75,20 +75,17 @@ const EnterReadingScreen = ({ navigation }) => {
         centerComponent={{
           text:
             type.charAt(0).toUpperCase() +
-            type
-              .slice(1)
-              .split("_")
-              .join(" ") +
+            type.slice(1).split("_").join(" ") +
             " Managment",
-          style: { color: "black", fontFamily: "helvari-bold" }
+          style: { color: "black", fontFamily: "helvari-bold" },
         }}
         rightComponent={
           <MaterialCommunityIcons
-            name="home"
+            name="keyboard-backspace"
             color={"black"}
             size={30}
             onPress={() => {
-              navigation.toggleDrawer();
+              navigation.navigate("UserHealthMain");
             }}
           />
         }
@@ -96,17 +93,13 @@ const EnterReadingScreen = ({ navigation }) => {
           backgroundColor: theme.colorNav,
           justifyContent: "space-around",
           paddingTop: 0,
-          height: hp("10%")
+          height: hp("10%"),
         }}
       />
       <View style={styles.form}>
         <UserHealthForm
           headerText={
-            type.charAt(0).toUpperCase() +
-            type
-              .slice(1)
-              .split("_")
-              .join(" ")
+            type.charAt(0).toUpperCase() + type.slice(1).split("_").join(" ")
           }
           errorMessage={state.errorMessage}
           submitButtonText="Add Record"
@@ -119,15 +112,17 @@ const EnterReadingScreen = ({ navigation }) => {
 };
 EnterReadingScreen.navigationOptions = {
   title: "Add Reading",
-  tabBarIcon: <MaterialCommunityIcons name="plus" color={"#4c71f5"} size={20} />
+  tabBarIcon: (
+    <MaterialCommunityIcons name="plus" color={"#4c71f5"} size={20} />
+  ),
 };
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   form: {
-    marginTop: hp("10%")
-  }
+    marginTop: hp("10%"),
+  },
 });
 
 export default EnterReadingScreen;

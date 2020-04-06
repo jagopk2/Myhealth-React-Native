@@ -5,7 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   Dimensions,
-  FlatList
+  FlatList,
 } from "react-native";
 import MapView, { Polyline, Circle, Marker } from "react-native-maps";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -13,7 +13,7 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import * as Location from "expo-location";
 import Constants from "expo-constants";
 import * as Permissions from "expo-permissions";
-import Toast from "react-native-simple-toast";
+// import Toast from "react-native-simple-toast";
 import { showMessage, hideMessage } from "react-native-flash-message";
 import ProgressLoader from "rn-progress-loader";
 import {
@@ -21,13 +21,13 @@ import {
   Text,
   Button,
   ThemeContext,
-  ListItem
+  ListItem,
 } from "react-native-elements";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import {
   widthPercentageToDP as wp,
-  heightPercentageToDP as hp
+  heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
 import { SliderBox } from "react-native-image-slider-box";
@@ -45,14 +45,14 @@ const DoctorsScreen = ({ navigation }) => {
       "helvari-italic": require("../../assets/fonts/helvariitalic.ttf"),
       "helvari-italic-bold": require("../../assets/fonts/helvaribolditalic.ttf"),
       "helvari-medium": require("../../assets/fonts/helvarimedium.ttf"),
-      "helvari-medium-italic": require("../../assets/fonts/helvarimediumitalic.ttf")
+      "helvari-medium-italic": require("../../assets/fonts/helvarimediumitalic.ttf"),
     });
   };
   useEffect(() => {
     getLocationAsync();
   }, []);
 
-  const handleMapRegionChange = mapRegion => {
+  const handleMapRegionChange = (mapRegion) => {
     console.log(mapRegion);
     setMapRegion(mapRegion);
   };
@@ -73,7 +73,7 @@ const DoctorsScreen = ({ navigation }) => {
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
       latitudeDelta: 0.2,
-      longitudeDelta: 0.2
+      longitudeDelta: 0.2,
     });
   };
 
@@ -91,17 +91,17 @@ const DoctorsScreen = ({ navigation }) => {
         message: "Doctors Fetched Succesfully",
         icon: "auto",
         type: "success",
-        duration: 2500
+        duration: 2500,
       });
     } catch (error) {
       showMessage({
         message: "Doctors cannot be Fetched Succesfully",
         icon: "auto",
         type: "danger",
-        duration: 2500
+        duration: 2500,
       });
       console.log("cant Fetch Doctors", error);
-      Toast.show("Cannot Fetch Doctors");
+      // Toast.show("Cannot Fetch Doctors");
     }
   };
   if (!fontLoad) {
@@ -130,7 +130,7 @@ const DoctorsScreen = ({ navigation }) => {
         }
         centerComponent={{
           text: "Hospitals",
-          style: { color: "black", fontFamily: "helvari-bold" }
+          style: { color: "black", fontFamily: "helvari-bold" },
         }}
         rightComponent={
           <MaterialCommunityIcons
@@ -138,7 +138,7 @@ const DoctorsScreen = ({ navigation }) => {
             color={"black"}
             size={30}
             onPress={() => {
-              navigation.toggleDrawer();
+              navigation.navigate("Homepage");
             }}
           />
         }
@@ -146,7 +146,7 @@ const DoctorsScreen = ({ navigation }) => {
           backgroundColor: theme.colorNav,
           justifyContent: "space-around",
           paddingTop: 0,
-          height: hp("10%")
+          height: hp("10%"),
         }}
       />
       <Text style={styles.mainHeading} h4>
@@ -164,7 +164,7 @@ const DoctorsScreen = ({ navigation }) => {
             <Marker
               coordinate={{
                 latitude: mapRegion.latitude,
-                longitude: mapRegion.longitude
+                longitude: mapRegion.longitude,
               }}
             >
               <View style={{ backgroundColor: "transparent", padding: 10 }}>
@@ -181,7 +181,7 @@ const DoctorsScreen = ({ navigation }) => {
                     <Marker
                       coordinate={{
                         latitude: item.position[0],
-                        longitude: item.position[1]
+                        longitude: item.position[1],
                       }}
                       key={i}
                       title={item.title}
@@ -240,8 +240,8 @@ const DoctorsScreen = ({ navigation }) => {
     </ScrollView>
   );
 };
-DoctorsScreen.navigationOptions = screenProps => ({
-  title: "Doctors",
+DoctorsScreen.navigationOptions = (screenProps) => ({
+  title: "Hospitals",
   drawerIcon: ({ tintColor }) => (
     <MaterialCommunityIcons
       name="doctor"
@@ -251,22 +251,22 @@ DoctorsScreen.navigationOptions = screenProps => ({
         navigation.toggleDrawer();
       }}
     />
-  )
+  ),
 });
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   mapStyle: {
     width: Dimensions.get("window").width,
-    height: hp("50%")
+    height: hp("50%"),
   },
   mainHeading: {
     marginTop: hp("2%"),
     textAlign: "center",
-    marginBottom: hp("2%")
-  }
+    marginBottom: hp("2%"),
+  },
 });
 
 export default DoctorsScreen;

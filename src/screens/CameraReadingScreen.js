@@ -5,7 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
-  Image
+  Image,
 } from "react-native";
 import { withNavigationFocus } from "react-navigation";
 import { Context as ImageContext } from "../context/ImageContext";
@@ -14,7 +14,7 @@ import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 import Spacer from "../components/Spacer";
 import { AsyncStorage } from "react-native";
-import Toast from "react-native-simple-toast";
+// import Toast from "react-native-simple-toast";
 import { showMessage, hideMessage } from "react-native-flash-message";
 import ProgressLoader from "rn-progress-loader";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -24,13 +24,13 @@ import {
   Header,
   Button,
   Text,
-  ThemeContext
+  ThemeContext,
 } from "react-native-elements";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import {
   widthPercentageToDP as wp,
-  heightPercentageToDP as hp
+  heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
 const CameraReadingScreen = ({ navigation }) => {
@@ -50,7 +50,7 @@ const CameraReadingScreen = ({ navigation }) => {
       "helvari-italic": require("../../assets/fonts/helvariitalic.ttf"),
       "helvari-italic-bold": require("../../assets/fonts/helvaribolditalic.ttf"),
       "helvari-medium": require("../../assets/fonts/helvarimedium.ttf"),
-      "helvari-medium-italic": require("../../assets/fonts/helvarimediumitalic.ttf")
+      "helvari-medium-italic": require("../../assets/fonts/helvarimediumitalic.ttf"),
     });
   };
 
@@ -106,20 +106,17 @@ const CameraReadingScreen = ({ navigation }) => {
         centerComponent={{
           text:
             type.charAt(0).toUpperCase() +
-            type
-              .slice(1)
-              .split("_")
-              .join(" ") +
+            type.slice(1).split("_").join(" ") +
             " Managment",
-          style: { color: "black", fontFamily: "helvari-bold" }
+          style: { color: "black", fontFamily: "helvari-bold" },
         }}
         rightComponent={
           <MaterialCommunityIcons
-            name="home"
+            name="keyboard-backspace"
             color={"black"}
             size={30}
             onPress={() => {
-              navigation.toggleDrawer();
+              navigation.navigate("UserHealthMain");
             }}
           />
         }
@@ -127,7 +124,7 @@ const CameraReadingScreen = ({ navigation }) => {
           backgroundColor: theme.colorNav,
           justifyContent: "space-around",
           paddingTop: 0,
-          height: hp("10%")
+          height: hp("10%"),
         }}
       />
       <Text h3 style={styles.mainHeading}>
@@ -138,7 +135,7 @@ const CameraReadingScreen = ({ navigation }) => {
           <Camera
             style={styles.camera}
             type={camType}
-            ref={camera => {
+            ref={(camera) => {
               setCamRef(camera);
             }}
           >
@@ -146,14 +143,14 @@ const CameraReadingScreen = ({ navigation }) => {
               style={{
                 flex: 1,
                 backgroundColor: "transparent",
-                flexDirection: "row"
+                flexDirection: "row",
               }}
             >
               <TouchableOpacity
                 style={{
                   flex: 0.1,
                   alignSelf: "flex-end",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
                 onPress={() => {
                   setCamType(
@@ -200,7 +197,7 @@ const CameraReadingScreen = ({ navigation }) => {
             <Image
               style={styles.image}
               source={{
-                uri: image.uri
+                uri: image.uri,
               }}
             />
             <Spacer />
@@ -222,9 +219,10 @@ const CameraReadingScreen = ({ navigation }) => {
                 form.append("photo", {
                   uri: localUri,
                   name: filename,
-                  type: imgType
+                  type: imgType,
                 });
-                addImage(form, Toast, setImage, showMessage, setUploadStatus);
+                // addImage(form, Toast, setImage, showMessage, setUploadStatus);
+                addImage(form, setImage, showMessage, setUploadStatus);
               }}
             />
           </View>
@@ -254,7 +252,7 @@ const takePicture = async (cameraReference, setImage, addImage) => {
       message: "Image Take Succesfully",
       icon: "auto",
       type: "success",
-      duration: 2500
+      duration: 2500,
     });
     setImage(photo);
     // addImage(formData);
@@ -266,7 +264,7 @@ const pickImage = async (setImage, addImage) => {
     mediaTypes: ImagePicker.MediaTypeOptions.All,
     allowsEditing: true,
     aspect: [4, 3],
-    quality: 0.5
+    quality: 0.5,
   });
 
   console.log(result);
@@ -276,14 +274,14 @@ const pickImage = async (setImage, addImage) => {
       message: "Image Picked Succesfully",
       icon: "auto",
       type: "success",
-      duration: 2500
+      duration: 2500,
     });
     await setImage(result);
     // addImage(form);
   }
 };
 
-const uploadPic = async photo => {
+const uploadPic = async (photo) => {
   let localUri = photo.uri;
   let filename = localUri.split("/").pop();
 
@@ -300,34 +298,34 @@ const uploadPic = async photo => {
     method: "POST",
     body: formData,
     headers: {
-      "content-type": "multipart/form-data"
-    }
+      "content-type": "multipart/form-data",
+    },
   });
 };
 CameraReadingScreen.navigationOptions = {
   title: "Add Camera Report",
   tabBarIcon: (
     <MaterialCommunityIcons name="camera" color={"#4c71f5"} size={20} />
-  )
+  ),
 };
 const styles = StyleSheet.create({
   camera: {
     height: hp("50%"),
     width: wp("90%"),
-    marginHorizontal: wp("5%")
+    marginHorizontal: wp("5%"),
   },
   image: {
     height: hp("50%"),
-    width: "100%"
+    width: "100%",
   },
   buttons: {
-    marginTop: hp("5%")
+    marginTop: hp("5%"),
   },
   mainHeading: {
     marginTop: hp("2%"),
     textAlign: "center",
-    marginBottom: hp("2%")
-  }
+    marginBottom: hp("2%"),
+  },
 });
 
 export default withNavigationFocus(CameraReadingScreen);

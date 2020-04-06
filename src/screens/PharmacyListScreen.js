@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import trackerApi from "../Api/tracker";
-import Toast from "react-native-simple-toast";
+// import Toast from "react-native-simple-toast";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { showMessage, hideMessage } from "react-native-flash-message";
@@ -11,13 +11,13 @@ import {
   Text,
   Button,
   ThemeContext,
-  ListItem
+  ListItem,
 } from "react-native-elements";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import {
   widthPercentageToDP as wp,
-  heightPercentageToDP as hp
+  heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
 const PharmacyList = ({ navigation }) => {
@@ -32,7 +32,7 @@ const PharmacyList = ({ navigation }) => {
       "helvari-italic": require("../../assets/fonts/helvariitalic.ttf"),
       "helvari-italic-bold": require("../../assets/fonts/helvaribolditalic.ttf"),
       "helvari-medium": require("../../assets/fonts/helvarimedium.ttf"),
-      "helvari-medium-italic": require("../../assets/fonts/helvarimediumitalic.ttf")
+      "helvari-medium-italic": require("../../assets/fonts/helvarimediumitalic.ttf"),
     });
   };
 
@@ -67,15 +67,15 @@ const PharmacyList = ({ navigation }) => {
         }
         centerComponent={{
           text: `Pharmacy List`,
-          style: { color: "black", fontFamily: "helvari-bold" }
+          style: { color: "black", fontFamily: "helvari-bold" },
         }}
         rightComponent={
           <MaterialCommunityIcons
-            name="home"
+            name="keyboard-backspace"
             color={"black"}
             size={30}
             onPress={() => {
-              navigation.toggleDrawer();
+              navigation.navigate("PharmacyMain");
             }}
           />
         }
@@ -83,7 +83,7 @@ const PharmacyList = ({ navigation }) => {
           backgroundColor: theme.colorNav,
           justifyContent: "space-around",
           paddingTop: 0,
-          height: hp("10%")
+          height: hp("10%"),
         }}
       />
       <Text h3 style={styles.mainHeading}>
@@ -146,7 +146,7 @@ const fetchPharmacies = async (city, setCityList) => {
       message: "Pharmacies Fetched Succesfully",
       icon: "auto",
       type: "success",
-      duration: 2500
+      duration: 2500,
     });
   } catch (error) {
     console.log("Error Fetching Pharmacies", error);
@@ -154,9 +154,9 @@ const fetchPharmacies = async (city, setCityList) => {
       message: "Pharmacies cannot be Fetched Succesfully",
       icon: "auto",
       type: "danger",
-      duration: 2500
+      duration: 2500,
     });
-    Toast.show("Error Fetching Pharmacies");
+    // Toast.show("Error Fetching Pharmacies");
   }
 };
 
@@ -164,8 +164,8 @@ const styles = StyleSheet.create({
   mainHeading: {
     marginTop: hp("2%"),
     textAlign: "center",
-    marginBottom: hp("2%")
-  }
+    marginBottom: hp("2%"),
+  },
 });
 
 export default PharmacyList;

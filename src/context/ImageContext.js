@@ -49,7 +49,6 @@ const fetchImage = (dispatch) => async (showMessage) => {
 };
 const addImage = (dispatch) => async (
   formData,
-  Toast,
   setImage,
   showMessage,
   setUploadStatus
