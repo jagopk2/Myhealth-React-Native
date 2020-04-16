@@ -1,5 +1,11 @@
 import React, { useContext, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { NavigationEvents } from "react-navigation";
 import { Context as AuthContext } from "../context/AuthContext";
 import AuthForm from "../components/AuthForm";
@@ -10,7 +16,7 @@ import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import {
   widthPercentageToDP as wp,
-  heightPercentageToDP as hp
+  heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
 const SigninScreen = ({ navigation }) => {
@@ -24,7 +30,7 @@ const SigninScreen = ({ navigation }) => {
       "helvari-italic": require("../../assets/fonts/helvariitalic.ttf"),
       "helvari-italic-bold": require("../../assets/fonts/helvaribolditalic.ttf"),
       "helvari-medium": require("../../assets/fonts/helvarimedium.ttf"),
-      "helvari-medium-italic": require("../../assets/fonts/helvarimediumitalic.ttf")
+      "helvari-medium-italic": require("../../assets/fonts/helvarimediumitalic.ttf"),
     });
   };
   if (!fontLoad) {
@@ -38,25 +44,31 @@ const SigninScreen = ({ navigation }) => {
     );
   }
   return (
-    <View style={styles.container}>
-      <NavigationEvents onWillBlur={clearErrorMessage} />
-      <AuthForm
-        headerText="Sign In for My Health"
-        errorMessage={state.errorMessage}
-        submitButtonText="SignIn"
-        onSubmit={signin}
-      />
-      <NavLink
-        text="Don't have an Account ? Sign up Instead!!"
-        routeName="Signup"
-      />
-    </View>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.Os == "ios" ? "padding" : "height"}
+      enabled
+    >
+      <ScrollView>
+        <NavigationEvents onWillBlur={clearErrorMessage} />
+        <AuthForm
+          headerText="Sign In for My Health"
+          errorMessage={state.errorMessage}
+          submitButtonText="SignIn"
+          onSubmit={signin}
+        />
+        <NavLink
+          text="Don't have an Account ? Sign up Instead!!"
+          routeName="Signup"
+        />
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
 SigninScreen.navigationOptions = () => {
   return {
-    headerShown: false
+    headerShown: false,
   };
 };
 
@@ -64,8 +76,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    marginBottom: 150
-  }
+    marginBottom: 150,
+  },
 });
 
 export default SigninScreen;

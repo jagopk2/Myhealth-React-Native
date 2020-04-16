@@ -132,49 +132,93 @@ const addRecord = (dispatch) => async ({ reading, type, showMessage }) => {
   try {
     switch (type) {
       case "blood_pressure":
-        response = await trackerApi.post("/savebloodpressure/", {
-          bpReport: {
-            value: reading,
-            user_id: userId,
-          },
-        });
-        dispatch({ type: "add_record" });
-        show_success_message(showMessage, "Record Added Succesfully");
-        navigate("ShowReading");
+        if (check_blood_pressure(reading)) {
+          //console.log("Right");
+          response = await trackerApi.post("/savebloodpressure/", {
+            bpReport: {
+              value: reading,
+              user_id: userId,
+            },
+          });
+          dispatch({ type: "add_record" });
+          show_success_message(showMessage, "Record Added Succesfully");
+          navigate("ShowReading");
+        } else {
+          //console.log("Wrong");
+          show_error_message(
+            showMessage,
+            "Kindly Enter Reading in xxx/xxx Format"
+          );
+          dispatch({
+            type: "add_error",
+            payload: "Something went wrong with User Health",
+          });
+        }
         break;
       case "heart_rate":
-        response = await trackerApi.post("/saveheart/", {
-          heartReport: {
-            value: reading,
-            user_id: userId,
-          },
-        });
-        dispatch({ type: "add_record" });
-        show_success_message(showMessage, "Record Added Succesfully");
-        navigate("ShowReading");
+        if (check_heart_rate(reading)) {
+          //console.log("Right");
+          response = await trackerApi.post("/saveheart/", {
+            heartReport: {
+              value: reading,
+              user_id: userId,
+            },
+          });
+          dispatch({ type: "add_record" });
+          show_success_message(showMessage, "Record Added Succesfully");
+          navigate("ShowReading");
+        } else {
+          //console.log("Wrong");
+          show_error_message(showMessage, "Kindly Enter the Right Reading");
+          dispatch({
+            type: "add_error",
+            payload: "Something went wrong with User Health",
+          });
+        }
+
         break;
       case "random_plasma_sugar":
-        response = await trackerApi.post("/saveglucose/", {
-          diabeticReport: {
-            value: reading,
-            user_id: userId,
-          },
-        });
-        dispatch({ type: "add_record" });
-        show_success_message(showMessage, "Record Added Succesfully");
-        //
-        navigate("ShowReading");
+        if (check_fasting_random(reading)) {
+          //console.log("Right");
+          response = await trackerApi.post("/saveglucose/", {
+            diabeticReport: {
+              value: reading,
+              user_id: userId,
+            },
+          });
+          dispatch({ type: "add_record" });
+          show_success_message(showMessage, "Record Added Succesfully");
+          //
+          navigate("ShowReading");
+        } else {
+          //console.log("Wrong");
+          show_error_message(showMessage, "Kindly Enter the Right Reading");
+          dispatch({
+            type: "add_error",
+            payload: "Something went wrong with User Health",
+          });
+        }
         break;
       case "fasting_plasma_sugar":
-        response = await trackerApi.post("/savefastinplasamglucose/", {
-          diabeticReport: {
-            value: reading,
-            user_id: userId,
-          },
-        });
-        dispatch({ type: "add_record" });
-        show_success_message(showMessage, "Record Added Succesfully");
-        navigate("ShowReading");
+        if (check_fasting_random(reading)) {
+          //console.log("Right");
+          response = await trackerApi.post("/savefastinplasamglucose/", {
+            diabeticReport: {
+              value: reading,
+              user_id: userId,
+            },
+          });
+          dispatch({ type: "add_record" });
+          show_success_message(showMessage, "Record Added Succesfully");
+          navigate("ShowReading");
+        } else {
+          //console.log("Wrong");
+          show_error_message(showMessage, "Kindly Enter the Right Reading");
+          dispatch({
+            type: "add_error",
+            payload: "Something went wrong with User Health",
+          });
+        }
         break;
       default:
         response: null;
@@ -183,7 +227,7 @@ const addRecord = (dispatch) => async ({ reading, type, showMessage }) => {
     }
   } catch (error) {
     console.log("user1", error);
-    show_error_message(showMessage, "Cannot Add New Records");
+    show_error_message(showMessage, "Kindly Enter the Right Reading");
     dispatch({
       type: "add_error",
       payload: "Something went wrong with User Health",
@@ -225,6 +269,24 @@ const show_error_message = (showMessage, message) => {
     duration: 2500,
   });
 };
+
+function check_blood_pressure(parameter) {
+  var res = parameter.match(/^[0-9]{2,3}[/][0-9]{2,3}?$/g);
+  if (res) return true;
+  else return false;
+}
+
+function check_fasting_random(parameter) {
+  var res = parameter.match(/^[0-9]{2,3}?$/g);
+  if (res) return true;
+  else return false;
+}
+
+function check_heart_rate(parameter) {
+  var res = parameter.match(/^[0-9]{2,3}?$/g);
+  if (res) return true;
+  else return false;
+}
 
 export const { Context, Provider } = createDataContext(
   UserHealthReducer,

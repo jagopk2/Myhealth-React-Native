@@ -228,7 +228,9 @@ const DoctorsScreen = ({ navigation }) => {
           })
         : null}
       <ProgressLoader
-        visible={locationResult === null || mapRegion === null}
+        visible={
+          (locationResult === null || mapRegion === null) && locationPermission
+        }
         isModal={true}
         isHUD={true}
         hudColor={"#fffafa"}
@@ -243,14 +245,7 @@ const DoctorsScreen = ({ navigation }) => {
 DoctorsScreen.navigationOptions = (screenProps) => ({
   title: "Hospitals",
   drawerIcon: ({ tintColor }) => (
-    <MaterialCommunityIcons
-      name="doctor"
-      color={tintColor}
-      size={27}
-      onPress={() => {
-        navigation.toggleDrawer();
-      }}
-    />
+    <MaterialCommunityIcons name="doctor" color={tintColor} size={27} />
   ),
 });
 

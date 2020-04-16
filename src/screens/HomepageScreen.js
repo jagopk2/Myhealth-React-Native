@@ -88,7 +88,7 @@ const HomepageScreen = ({ navigation }) => {
   return (
     <AnimatedSplash
       isLoaded={firstLoad}
-      logoImage={require("../../assets/loading2.png")}
+      logoImage={require("../../assets/heartbeat.png")}
       backgroundColor={"#fffafa"}
       logoHeight={100}
       logoWidht={100}
@@ -289,14 +289,7 @@ const HomepageScreen = ({ navigation }) => {
 HomepageScreen.navigationOptions = (screenProps) => ({
   title: "Home Screen",
   drawerIcon: ({ tintColor }) => (
-    <MaterialCommunityIcons
-      name="home"
-      color={tintColor}
-      size={27}
-      onPress={() => {
-        navigation.toggleDrawer();
-      }}
-    />
+    <MaterialCommunityIcons name="home" color={tintColor} size={27} />
   ),
 });
 const styles = StyleSheet.create({

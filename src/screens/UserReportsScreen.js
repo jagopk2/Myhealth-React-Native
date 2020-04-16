@@ -225,14 +225,7 @@ const UserReportsScreen = ({ navigation }) => {
 UserReportsScreen.navigationOptions = (screenProps) => ({
   title: "Medical Reports",
   drawerIcon: ({ tintColor }) => (
-    <MaterialCommunityIcons
-      name="book-outline"
-      color={tintColor}
-      size={27}
-      onPress={() => {
-        navigation.toggleDrawer();
-      }}
-    />
+    <MaterialCommunityIcons name="book-outline" color={tintColor} size={27} />
   ),
 });
 const styles = StyleSheet.create({

@@ -148,9 +148,6 @@ AccountScreen.navigationOptions = (screenProps) => ({
       name="account-circle-outline"
       color={tintColor}
       size={27}
-      onPress={() => {
-        navigation.toggleDrawer();
-      }}
     />
   ),
 });

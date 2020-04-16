@@ -1,11 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { NavigationEvents } from "react-navigation";
 import { Context as AuthContext } from "../context/AuthContext";
 import AuthForm from "../components/AuthForm";
 import NavLink from "../components/NavLink";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Header, Text, Button, ThemeContext } from "react-native-elements";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
+
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import {
@@ -38,19 +46,25 @@ const SignupScreen = ({ navigation }) => {
     );
   }
   return (
-    <ScrollView style={theme.container}>
-      <NavigationEvents onWillBlur={clearErrorMessage} />
-      <AuthForm
-        headerText="Sign Up for My Health"
-        errorMessage={state.errorMessage}
-        submitButtonText="SignUp"
-        onSubmit={signup}
-      />
-      <NavLink
-        text="Already have Account ? Sign in Instead!!"
-        routeName="Signin"
-      />
-    </ScrollView>
+    <KeyboardAvoidingView
+      style={theme.container}
+      behavior={Platform.Os == "ios" ? "padding" : "height"}
+      enabled
+    >
+      <ScrollView>
+        <NavigationEvents onWillBlur={clearErrorMessage} />
+        <AuthForm
+          headerText="Sign Up for My Health"
+          errorMessage={state.errorMessage}
+          submitButtonText="SignUp"
+          onSubmit={signup}
+        />
+        <NavLink
+          text="Already have Account ? Sign in Instead!!"
+          routeName="Signin"
+        />
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

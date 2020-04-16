@@ -4,14 +4,10 @@
     "slug": "Myhealth",
     "privacy": "public",
     "sdkVersion": "36.0.0",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/heartbeat.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -20,12 +16,23 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
-    "description": ""
+    "android": {
+      "package": "com.gforce.myhealth",
+      "versionCode": 1,
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAbCyfV6NP2gK-LlnD7scRNHptDD_Zkv-Y"
+        }
+      }
+    },
+    "description": "",
+    "androidStatusBar": {
+      "backgroundColor": "#ced9d7",
+      "translucent": false
+    }
   }
 }

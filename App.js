@@ -60,9 +60,6 @@ const switchNavigator = createSwitchNavigator({
                 name="heart"
                 color={tintColor}
                 size={25}
-                onPress={() => {
-                  navigation.toggleDrawer();
-                }}
               />
             ),
           },
@@ -82,9 +79,6 @@ const switchNavigator = createSwitchNavigator({
                 name="pharmacy"
                 color={tintColor}
                 size={25}
-                onPress={() => {
-                  navigation.toggleDrawer();
-                }}
               />
             ),
           },
@@ -104,9 +98,6 @@ const switchNavigator = createSwitchNavigator({
                 name="bullseye-arrow"
                 color={tintColor}
                 size={25}
-                onPress={() => {
-                  navigation.toggleDrawer();
-                }}
               />
             ),
           },
