@@ -27,6 +27,7 @@ const UserReportsScreen = ({ navigation }) => {
   const {
     fetchImage,
     clearErrorMessage,
+    reset_imagesContext,
     state: { images, errorMessage, noData },
   } = useContext(ImageContext);
   const { theme } = useContext(ThemeContext);
@@ -44,6 +45,7 @@ const UserReportsScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    reset_imagesContext();
     fetchImage(showMessage);
   }, []);
   if (!fontLoad) {
@@ -102,6 +104,7 @@ const UserReportsScreen = ({ navigation }) => {
     <ScrollView style={theme.container}>
       <NavigationEvents
         onWillFocus={() => {
+          reset_imagesContext();
           fetchImage(showMessage);
           //clearErrorMessage();
         }}

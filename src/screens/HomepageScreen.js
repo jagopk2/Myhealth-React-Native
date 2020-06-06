@@ -212,7 +212,7 @@ const HomepageScreen = ({ navigation }) => {
               <TouchableOpacity
                 style={styles.customCard}
                 onPress={() => {
-                  navigation.navigate("Symptoms");
+                  navigation.navigate("SymptomsMain");
                 }}
               >
                 <MaterialCommunityIcons
@@ -250,7 +250,7 @@ const HomepageScreen = ({ navigation }) => {
               <TouchableOpacity
                 style={styles.customCard}
                 onPress={() => {
-                  navigation.navigate("Pharmacy");
+                  navigation.navigate("PharmacyMain");
                 }}
               >
                 <MaterialCommunityIcons

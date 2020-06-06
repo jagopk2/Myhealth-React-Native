@@ -44,25 +44,25 @@ const SigninScreen = ({ navigation }) => {
     );
   }
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.Os == "ios" ? "padding" : "height"}
-      enabled
-    >
-      <ScrollView>
-        <NavigationEvents onWillBlur={clearErrorMessage} />
-        <AuthForm
-          headerText="Sign In for My Health"
-          errorMessage={state.errorMessage}
-          submitButtonText="SignIn"
-          onSubmit={signin}
-        />
-        <NavLink
-          text="Don't have an Account ? Sign up Instead!!"
-          routeName="Signup"
-        />
-      </ScrollView>
-    </KeyboardAvoidingView>
+    // <KeyboardAvoidingView
+    //   style={styles.container}
+    //   behavior={Platform.Os == "ios" ? "padding" : "height"}
+    //   enabled
+    // >
+    <ScrollView>
+      <NavigationEvents onWillBlur={clearErrorMessage} />
+      <AuthForm
+        headerText="Sign In for My Health"
+        errorMessage={state.errorMessage}
+        submitButtonText="SignIn"
+        onSubmit={signin}
+      />
+      <NavLink
+        text="Don't have an Account ? Sign up Instead!!"
+        routeName="Signup"
+      />
+    </ScrollView>
+    // </KeyboardAvoidingView>
   );
 };
 
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    marginBottom: 150,
+    marginBottom: hp("5%"),
   },
 });
 

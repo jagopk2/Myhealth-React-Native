@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import { withNavigationFocus } from "react-navigation";
-import { Context as ImageContext } from "../context/ImageContext";
+import { Context as ImageContext } from "../context/ImageContext2";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";

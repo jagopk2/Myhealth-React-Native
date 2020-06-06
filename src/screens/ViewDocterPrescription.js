@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Spacer from "../components/Spacer";
-import { Context as ImageContext } from "../context/ImageContext";
+import { Context as ImageContext } from "../context/ImageContext2";
 import Swiper from "react-native-realistic-deck-swiper";
 import { DeckSwiper, Card, CardItem, Left, Body, Icon } from "native-base";
 import { NavigationEvents } from "react-navigation";
@@ -27,6 +27,7 @@ const ViewDocterPrescriptionScreen = ({ navigation }) => {
   const {
     fetchPrescription,
     clearErrorMessage,
+    reset_imagesContext,
     state: { images, errorMessage, noData },
   } = useContext(ImageContext);
   const { theme } = useContext(ThemeContext);
@@ -44,6 +45,7 @@ const ViewDocterPrescriptionScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    reset_imagesContext();
     fetchPrescription(showMessage);
   }, []);
   if (!fontLoad) {
@@ -72,7 +74,7 @@ const ViewDocterPrescriptionScreen = ({ navigation }) => {
             />
           }
           centerComponent={{
-            text: "User Reports",
+            text: "Docter's Prescription",
             style: { color: "black", fontFamily: "helvari-bold" },
           }}
           rightComponent={
@@ -93,7 +95,7 @@ const ViewDocterPrescriptionScreen = ({ navigation }) => {
           }}
         />
         <Text style={styles.mainHeading} h3>
-          No Reports Found
+          No Prescriptions Found
         </Text>
       </View>
     );
@@ -102,6 +104,7 @@ const ViewDocterPrescriptionScreen = ({ navigation }) => {
     <ScrollView style={theme.container}>
       <NavigationEvents
         onWillFocus={() => {
+          reset_imagesContext();
           fetchPrescription(showMessage);
           //clearErrorMessage();
         }}
@@ -183,9 +186,7 @@ const ViewDocterPrescriptionScreen = ({ navigation }) => {
           images={[
             {
               source: { uri: `data:image/gif;base64,${viewImage.img}` },
-              title:
-                viewImage.reportName.charAt(0).toUpperCase() +
-                viewImage.reportName.slice(1).split("_").join(" "),
+              title: "Doctor's Prescription",
               width: wp("90%"),
               height: hp("90%"),
             },

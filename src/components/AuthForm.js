@@ -20,6 +20,12 @@ const AuthForm = ({ headerText, errorMessage, onSubmit, submitButtonText }) => {
   const [nameErr, setNameErr] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [phoneNumberErr, setPhoneNumberErr] = useState("");
+  const [firstRequest, setFirstRequest] = useState(true);
+
+  // console.log("email", emailErr);
+  // console.log("password", passwordErr);
+  // console.log("name", nameErr);
+  // console.log("phoneNumber", phoneNumberErr);
   return (
     <>
       <Spacer />
@@ -103,7 +109,7 @@ const AuthForm = ({ headerText, errorMessage, onSubmit, submitButtonText }) => {
           title={submitButtonText}
           onPress={() => {
             submitButtonText === "SignIn"
-              ? (validate_email(email, setEmailErr),
+              ? (validate_email(email, setEmailErr, setFirstRequest),
                 validate_password(password, setPasswordErr),
                 passwordErr === "" && emailErr === ""
                   ? onSubmit({
@@ -113,14 +119,15 @@ const AuthForm = ({ headerText, errorMessage, onSubmit, submitButtonText }) => {
                     })
                   : null)
               : //onSubmit({ email, password, showMessage })
-                (validate_email(email, setEmailErr),
+                (validate_email(email, setEmailErr, setFirstRequest),
                 validate_phoneNumber(phoneNumber, setPhoneNumberErr),
                 validate_name(name, setNameErr),
                 validate_password(password, setPasswordErr),
                 passwordErr === "" &&
                 nameErr === "" &&
                 phoneNumberErr === "" &&
-                emailErr === ""
+                emailErr === "" &&
+                !firstRequest
                   ? onSubmit({
                       email,
                       password,
@@ -128,7 +135,14 @@ const AuthForm = ({ headerText, errorMessage, onSubmit, submitButtonText }) => {
                       phoneNumber,
                       showMessage,
                     })
-                  : null);
+                  : // ? onSubmit({
+                    //     email,
+                    //     password,
+                    //     name,
+                    //     phoneNumber,
+                    //     showMessage,
+                    //   })
+                    null);
             // ? onSubmit({ email, password, showMessage })
             // : onSubmit({ email, password, name, phoneNumber, showMessage });
 
@@ -139,12 +153,13 @@ const AuthForm = ({ headerText, errorMessage, onSubmit, submitButtonText }) => {
     </>
   );
 };
-const validate_email = (email, setEmailErr) => {
+const validate_email = (email, setEmailErr, setFirstRequest) => {
   if (EmailValidator.validate(email)) {
     setEmailErr("");
   } else {
     setEmailErr("Kindly Enter a Valid Email");
   }
+  setFirstRequest(false);
 };
 const validate_phoneNumber = (phoneNumber, setPhoneNumberErr) => {
   var phoneno = /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/;

@@ -118,6 +118,8 @@ const SymptomsScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    setSelectedItems([]);
+    setMultiSelect(null);
     fetchSymptoms(setSymptoms, setError);
     fetchDocuments(setDocuments, setError);
   }, []);
@@ -136,6 +138,8 @@ const SymptomsScreen = ({ navigation }) => {
       <NavigationEvents
         onWillFocus={() => {
           // setError(false);
+          setSelectedItems([]);
+          setMultiSelect(null);
           fetchSymptoms(setSymptoms, setError);
           fetchDocuments(setDocuments, setError);
           // console.log("Nav Evenet");
@@ -165,7 +169,7 @@ const SymptomsScreen = ({ navigation }) => {
                 color={"black"}
                 size={30}
                 onPress={() => {
-                  navigation.toggleDrawer();
+                  navigation.navigate("Homepage");
                 }}
               />
             }

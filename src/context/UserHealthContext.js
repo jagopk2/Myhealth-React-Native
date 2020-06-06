@@ -22,6 +22,14 @@ const UserHealthReducer = (state, action) => {
       return { ...state, errorMessage: "" };
     case "clear_success_message":
       return { ...state, successMessage: "" };
+    case "resetContext":
+      return {
+        ...state,
+        records: [],
+        errorMessage: "",
+        successMessage: "",
+        noData: false,
+      };
     case "add_record":
       return {
         ...state,
@@ -245,6 +253,9 @@ const clearSuccessMessage = (dispatch) => () => {
 const set_noData = (dispatch) => (value) => {
   dispatch({ type: "set_noData", payload: value });
 };
+const reset_UserHealthContext = (dispatch) => () => {
+  dispatch({ type: "resetContext" });
+};
 const show_success_message = (showMessage, message) => {
   showMessage({
     message,
@@ -290,6 +301,12 @@ function check_heart_rate(parameter) {
 
 export const { Context, Provider } = createDataContext(
   UserHealthReducer,
-  { addRecord, fetchTracks, clearErrorMessage, clearSuccessMessage },
+  {
+    addRecord,
+    fetchTracks,
+    clearErrorMessage,
+    clearSuccessMessage,
+    reset_UserHealthContext,
+  },
   { records: [], errorMessage: "", successMessage: "", noData: false }
 );

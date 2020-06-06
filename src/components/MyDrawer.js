@@ -5,7 +5,7 @@ import { Header, Avatar } from "react-native-elements";
 
 const MyDrawer = (props) => {
   return (
-    <View style={styles.background}>
+    <ScrollView style={styles.background}>
       {/* <Text>This is the MyDrawer Screen</Text> */}
       <Avatar
         rounded
@@ -14,7 +14,7 @@ const MyDrawer = (props) => {
         containerStyle={{ marginLeft: 45, marginTop: 0 }}
       />
       <DrawerItems {...props} />
-    </View>
+    </ScrollView>
   );
 };
 

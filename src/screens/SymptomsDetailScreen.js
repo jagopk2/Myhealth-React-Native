@@ -134,12 +134,17 @@ const SymptomsDetailScreen = ({ navigation }) => {
                   tintColor="#e26a00"
                   backgroundColor="#3d5875"
                   padding={10}
+                  style={{ marginHorizontal: wp("20%") }}
                   renderCap={({ center }) => (
                     <Circle cx={center.x} cy={center.y} r="10" fill="blue" />
                   )}
                 >
                   {(fill) => <Text>{parseInt(item).toString() + " %"}</Text>}
                 </AnimatedCircularProgress>
+                <Text>
+                  There is {Math.round(item)}% Chance of {data.labels[i]}{" "}
+                  disease. Kindly Contact your Concerned Docter
+                </Text>
               </Card>
             );
           })}

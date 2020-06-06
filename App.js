@@ -16,6 +16,7 @@ import DoctorsScreen from "./src/screens/DoctorsScreen";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { Provider as UserHealthProvider } from "./src/context/UserHealthContext";
 import { Provider as ImageProvider } from "./src/context/ImageContext";
+import { Provider as ImageProvider2 } from "./src/context/ImageContext2";
 import { setNavigator } from "./src/navigationRef";
 import { ThemeProvider, Button, Header } from "react-native-elements";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -147,18 +148,20 @@ const App = createAppContainer(switchNavigator);
 export default () => {
   return (
     <ThemeProvider theme={lightTheme}>
-      <ImageProvider>
-        <UserHealthProvider>
-          <AuthProvider>
-            <App
-              ref={(navigator) => {
-                setNavigator(navigator);
-              }}
-            />
-            <FlashMessage position="top" animated={true} />
-          </AuthProvider>
-        </UserHealthProvider>
-      </ImageProvider>
+      <ImageProvider2>
+        <ImageProvider>
+          <UserHealthProvider>
+            <AuthProvider>
+              <App
+                ref={(navigator) => {
+                  setNavigator(navigator);
+                }}
+              />
+              <FlashMessage position="top" animated={true} />
+            </AuthProvider>
+          </UserHealthProvider>
+        </ImageProvider>
+      </ImageProvider2>
     </ThemeProvider>
   );
 };

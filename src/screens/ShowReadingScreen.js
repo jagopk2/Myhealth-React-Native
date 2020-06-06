@@ -32,6 +32,7 @@ const ShowReadingScreen = ({ navigation }) => {
     state: { records, errorMessage, noData },
     fetchTracks,
     clearErrorMessage,
+    reset_UserHealthContext,
   } = useContext(UserHealthContext);
   //console.log(state);
   const { theme } = useContext(ThemeContext);
@@ -48,6 +49,7 @@ const ShowReadingScreen = ({ navigation }) => {
   };
   useEffect(() => {
     setType(navigation.state.params.type);
+    reset_UserHealthContext();
     fetchTracks(navigation.state.params.type, showMessage);
   }, [navigation.state.params.type]);
 
@@ -117,6 +119,7 @@ const ShowReadingScreen = ({ navigation }) => {
 
       <NavigationEvents
         onWillFocus={() => {
+          reset_UserHealthContext();
           fetchTracks(type, showMessage);
           console.log("i should be called");
         }}
