@@ -155,7 +155,7 @@ const validate_phoneNumber = (phoneNumber, setPhoneNumberErr) => {
   }
 };
 const validate_name = (name, setNameErr) => {
-  if (name.match(/^[a-zA-Z]*$/) && name.length > 1) {
+  if (name.match(/^[A-Za-z\s]+$/) && name.length > 1) {
     setNameErr("");
   } else {
     setNameErr("Kindly Enter a Name");

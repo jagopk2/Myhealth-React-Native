@@ -31,6 +31,9 @@ import Pharmacy from "./src/screens/PharmacyScreen";
 import PharmacyListScreen from "./src/screens/PharmacyListScreen";
 import PharmacyScreen from "./src/screens/PharmacyScreen";
 import SymptomsDetailScreen from "./src/screens/SymptomsDetailScreen";
+import AddPrescriptionScreen from "./src/screens/AdddocterPrescription";
+import ViewDocterPrescriptionScreen from "./src/screens/ViewDocterPrescription";
+import DocterPrescriptionMainScreen from "./src/screens/DocterPrescriptionMain";
 import { lightTheme } from "./src/themes/light";
 
 const switchNavigator = createSwitchNavigator({
@@ -96,6 +99,26 @@ const switchNavigator = createSwitchNavigator({
             drawerIcon: ({ tintColor }) => (
               <MaterialCommunityIcons
                 name="bullseye-arrow"
+                color={tintColor}
+                size={25}
+              />
+            ),
+          },
+        }
+      ),
+      Prescription: createStackNavigator(
+        {
+          PrescriptionMain: DocterPrescriptionMainScreen,
+          AddPrescription: AddPrescriptionScreen,
+          ViewPrescription: ViewDocterPrescriptionScreen,
+        },
+        {
+          headerMode: "none",
+          navigationOptions: {
+            title: "Doctor's Prescription",
+            drawerIcon: ({ tintColor }) => (
+              <MaterialCommunityIcons
+                name="file-document-outline"
                 color={tintColor}
                 size={25}
               />

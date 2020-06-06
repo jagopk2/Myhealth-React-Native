@@ -47,6 +47,34 @@ const fetchImage = (dispatch) => async (showMessage) => {
 
   // console.log(response.data);
 };
+const fetchPrescription = (dispatch) => async (showMessage) => {
+  //console.log("I am called");
+  const userId = await AsyncStorage.getItem("userId");
+  try {
+    response = await trackerApi.get(`/getPrescriptions?id=${userId}`, {
+      userId,
+    });
+    if (response.data === "noData") {
+      show_info_message(
+        showMessage,
+        "Kindly Add Prescriptions to View Prescriptions"
+      );
+      dispatch({ type: "set_noData", payload: true });
+    } else {
+      show_success_message(showMessage, "Images Fetched Succesfully");
+      dispatch({ type: "fetch_image", payload: response.data });
+    }
+  } catch (error) {
+    console.log("user1", error);
+    show_error_message(showMessage, "Images Cannot be Fetched");
+    dispatch({
+      type: "add_error",
+      payload: "Something went wrong with User Health",
+    });
+  }
+
+  // console.log(response.data);
+};
 const addImage = (dispatch) => async (
   formData,
   setImage,
@@ -68,6 +96,40 @@ const addImage = (dispatch) => async (
     setImage(null);
     dispatch({ type: "add_image" });
     navigate("UserReports");
+  } catch (error) {
+    console.log("user1", error);
+    // Toast.show("Error Uploading Image");
+    show_error_message(showMessage, "Images Cannot be Uploaded");
+
+    dispatch({
+      type: "add_error",
+      payload: "Something went wrong with User Health",
+    });
+  }
+  setUploadStatus(false);
+  // console.log(error.message)
+};
+const addPrescription = (dispatch) => async (
+  formData,
+  setImage,
+  showMessage,
+  setUploadStatus
+) => {
+  const userId = await AsyncStorage.getItem("userId");
+  setUploadStatus(true);
+  try {
+    response = await trackerApi.post("/uploadPrescription", formData, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    // Toast.show("Image Uploaded");
+    show_success_message(showMessage, "Image Uploaded Succesfully");
+
+    setImage(null);
+    dispatch({ type: "add_image" });
+    navigate("ViewPrescription");
   } catch (error) {
     console.log("user1", error);
     // Toast.show("Error Uploading Image");
@@ -113,6 +175,12 @@ const show_error_message = (showMessage, message) => {
 
 export const { Context, Provider } = createDataContext(
   ImageReducer,
-  { addImage, fetchImage, clearErrorMessage },
+  {
+    addImage,
+    fetchImage,
+    clearErrorMessage,
+    addPrescription,
+    fetchPrescription,
+  },
   { images: [], errorMessage: "", noData: false }
 );

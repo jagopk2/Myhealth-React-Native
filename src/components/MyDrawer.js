@@ -11,7 +11,7 @@ const MyDrawer = (props) => {
         rounded
         size="xlarge"
         source={require("../../assets/userIcon.jpg")}
-        containerStyle={{ marginLeft: 45, marginTop: 40 }}
+        containerStyle={{ marginLeft: 45, marginTop: 0 }}
       />
       <DrawerItems {...props} />
     </View>
