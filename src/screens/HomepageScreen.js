@@ -228,7 +228,7 @@ const HomepageScreen = ({ navigation }) => {
               <TouchableOpacity
                 style={styles.customCard}
                 onPress={() => {
-                  navigation.navigate("UserReports");
+                  navigation.navigate("ReportMain");
                 }}
               >
                 <Feather name="book" color={"black"} size={40} />
@@ -264,12 +264,16 @@ const HomepageScreen = ({ navigation }) => {
               <TouchableOpacity
                 style={styles.customCard}
                 onPress={() => {
-                  navigation.navigate("Account");
+                  navigation.navigate("PrescriptionMain");
                 }}
               >
-                <Feather name="user" color={"black"} size={40} />
-                <Text style={styles.mainItemsText}>Account</Text>
-                <Text style={styles.mainItemsText}>Information</Text>
+                <MaterialCommunityIcons
+                  name="file-document-outline"
+                  color={"black"}
+                  size={25}
+                />
+                <Text style={styles.mainItemsText}>Doctor's</Text>
+                <Text style={styles.mainItemsText}>Prescription</Text>
               </TouchableOpacity>
             </View>
           </View>

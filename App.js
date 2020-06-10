@@ -17,6 +17,7 @@ import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { Provider as UserHealthProvider } from "./src/context/UserHealthContext";
 import { Provider as ImageProvider } from "./src/context/ImageContext";
 import { Provider as ImageProvider2 } from "./src/context/ImageContext2";
+import { Provider as ImageProvider3 } from "./src/context/ImageContext3";
 import { setNavigator } from "./src/navigationRef";
 import { ThemeProvider, Button, Header } from "react-native-elements";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -33,8 +34,10 @@ import PharmacyListScreen from "./src/screens/PharmacyListScreen";
 import PharmacyScreen from "./src/screens/PharmacyScreen";
 import SymptomsDetailScreen from "./src/screens/SymptomsDetailScreen";
 import AddPrescriptionScreen from "./src/screens/AdddocterPrescription";
+import AddReportScreen from "./src/screens/AddReport";
 import ViewDocterPrescriptionScreen from "./src/screens/ViewDocterPrescription";
 import DocterPrescriptionMainScreen from "./src/screens/DocterPrescriptionMain";
+import ReportMainScreen from "./src/screens/ReportMain";
 import { lightTheme } from "./src/themes/light";
 
 const switchNavigator = createSwitchNavigator({
@@ -129,7 +132,26 @@ const switchNavigator = createSwitchNavigator({
       ),
 
       Doctors: DoctorsScreen,
-      UserReports: UserReportsScreen,
+      UserReports: createStackNavigator(
+        {
+          ReportMain: ReportMainScreen,
+          AddReport: AddReportScreen,
+          ViewReport: UserReportsScreen,
+        },
+        {
+          headerMode: "none",
+          navigationOptions: {
+            title: "Medical Reports",
+            drawerIcon: ({ tintColor }) => (
+              <MaterialCommunityIcons
+                name="book-outline"
+                color={tintColor}
+                size={27}
+              />
+            ),
+          },
+        }
+      ),
       Account: AccountScreen,
     },
     {
@@ -148,20 +170,22 @@ const App = createAppContainer(switchNavigator);
 export default () => {
   return (
     <ThemeProvider theme={lightTheme}>
-      <ImageProvider2>
-        <ImageProvider>
-          <UserHealthProvider>
-            <AuthProvider>
-              <App
-                ref={(navigator) => {
-                  setNavigator(navigator);
-                }}
-              />
-              <FlashMessage position="top" animated={true} />
-            </AuthProvider>
-          </UserHealthProvider>
-        </ImageProvider>
-      </ImageProvider2>
+      <ImageProvider3>
+        <ImageProvider2>
+          <ImageProvider>
+            <UserHealthProvider>
+              <AuthProvider>
+                <App
+                  ref={(navigator) => {
+                    setNavigator(navigator);
+                  }}
+                />
+                <FlashMessage position="top" animated={true} />
+              </AuthProvider>
+            </UserHealthProvider>
+          </ImageProvider>
+        </ImageProvider2>
+      </ImageProvider3>
     </ThemeProvider>
   );
 };

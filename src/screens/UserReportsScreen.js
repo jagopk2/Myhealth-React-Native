@@ -127,11 +127,11 @@ const UserReportsScreen = ({ navigation }) => {
         }}
         rightComponent={
           <MaterialCommunityIcons
-            name="home"
+            name="keyboard-backspace"
             color={"black"}
             size={30}
             onPress={() => {
-              navigation.navigate("Homepage");
+              navigation.navigate("ReportMain");
             }}
           />
         }

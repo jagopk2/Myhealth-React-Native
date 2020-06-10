@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import { withNavigationFocus } from "react-navigation";
-import { Context as ImageContext } from "../context/ImageContext2";
+import { Context as ImageContext } from "../context/ImageContext3";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
@@ -18,6 +18,7 @@ import { AsyncStorage } from "react-native";
 import { showMessage, hideMessage } from "react-native-flash-message";
 import ProgressLoader from "rn-progress-loader";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import RNPickerSelect from "react-native-picker-select";
 
 import {
   Card,
@@ -33,13 +34,14 @@ import {
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
-const AddPrescriptionScreen = ({ navigation }) => {
+const AddReportScreen = ({ navigation }) => {
+  const [type, setType] = useState(null);
   const [hasPermission, setHasPermission] = useState(null);
   const [camType, setCamType] = useState(Camera.Constants.Type.back);
   const [camRef, setCamRef] = useState(null);
   const [image, setImage] = useState(null);
   const [uploadStatus, setUploadStatus] = useState(false);
-  const { addPrescription, clearErrorMessage } = useContext(ImageContext);
+  const { addImage, clearErrorMessage } = useContext(ImageContext);
   const { theme } = useContext(ThemeContext);
   const [fontLoad, setFontLoad] = useState(false);
   const fetchFonts = () => {
@@ -95,7 +97,7 @@ const AddPrescriptionScreen = ({ navigation }) => {
           />
         }
         centerComponent={{
-          text: "Docter Prescription",
+          text: "Medical Report",
           style: { color: "black", fontFamily: "helvari-bold" },
         }}
         rightComponent={
@@ -104,7 +106,7 @@ const AddPrescriptionScreen = ({ navigation }) => {
             color={"black"}
             size={30}
             onPress={() => {
-              navigation.navigate("PrescriptionMain");
+              navigation.navigate("ReportMain");
             }}
           />
         }
@@ -116,7 +118,7 @@ const AddPrescriptionScreen = ({ navigation }) => {
         }}
       />
       <Text h3 style={styles.mainHeading}>
-        Add Prescription{" "}
+        Add Report{" "}
       </Text>
       {isFocused() && (
         <View>
@@ -160,10 +162,61 @@ const AddPrescriptionScreen = ({ navigation }) => {
         </View>
       )}
       <Spacer />
+      <RNPickerSelect
+        onValueChange={(value) => setType(value)}
+        items={[
+          { label: "APTT", value: "APTT" },
+          { label: "ANA", value: "ANA" },
+          { label: "ANTI DNA", value: "ANTI DNA" },
+          { label: "ANCA", value: "ANCA" },
+          { label: "B.U.N", value: "B.U.N" },
+          { label: "BLOOD CULTURE BLCs", value: "BLOOD CULTURE BLCs" },
+          { label: "CREATININE", value: "CREATININE" },
+          { label: "DENGUE IGM ANTIBODY", value: "DENGUE IGM ANTIBODY" },
+          { label: "DI-DIMER", value: "DI-DIMER" },
+          { label: "F.D.P", value: "F.D.P" },
+          { label: "FIBRLE", value: "FIBRLE" },
+          { label: "FUNGUS CULTURE", value: "FUNGUS CULTURE" },
+          {
+            label: "HAEMOGLOBIN, RBC, TLC & DLC",
+            value: "HAEMOGLOBIN, RBC, TLC & DLC",
+          },
+          {
+            label: "HIGH-DENSITY LIPOPROTEIN HDL",
+            value: "HIGH-DENSITY LIPOPROTEIN HDL",
+          },
+          { label: "LIVER FUNCTION TESTS", value: "LIVER FUNCTION TESTS" },
+          { label: "LIVER PROFILE", value: "LIVER PROFILE" },
+          {
+            label: "LOW-DENSITY LIPOPROTEIN LDL",
+            value: "LOW-DENSITY LIPOPROTEIN LDL",
+          },
+          { label: "PLATELET COUNT", value: "PLATELET COUNT" },
+          { label: "POCT-GLUCOSE FASTING", value: "POCT-GLUCOSE FASTING" },
+          { label: "POCT-GLUCOSE RANDOM", value: "POCT-GLUCOSE RANDOM" },
+          { label: "SERUM ELECTROLYTES", value: "SERUM ELECTROLYTES" },
+          { label: "URINALYSIS", value: "URINALYSIS" },
+          { label: "Other", value: "Other" },
+        ]}
+        placeholder={{
+          label: "Select the type of Medical Report...",
+          value: null,
+          color: "#000000",
+        }}
+        style={{
+          inputIOS: {
+            color: "black",
+          },
+          inputAndroid: {
+            color: "black",
+          },
+        }}
+      />
+      <Spacer />
       <Button
         title="Take Pic"
         onPress={() => {
-          takePicture(camRef, setImage, addPrescription);
+          takePicture(camRef, setImage, addImage);
         }}
       />
       <Text style={styles.mainHeading} h4>
@@ -175,7 +228,7 @@ const AddPrescriptionScreen = ({ navigation }) => {
         title="Pick Image From Gallery"
         onPress={() => {
           // takePicture(camRef);
-          pickImage(setImage, addPrescription);
+          pickImage(setImage, addImage);
         }}
         style={styles.buttons}
       />
@@ -189,29 +242,32 @@ const AddPrescriptionScreen = ({ navigation }) => {
               }}
             />
             <Spacer />
-            <Button
-              title="Upload Photo"
-              onPress={async () => {
-                let localUri = image.uri;
-                let filename = localUri.split("/").pop();
+            {type === null ? null : (
+              <Button
+                title="Upload Photo"
+                onPress={async () => {
+                  let localUri = image.uri;
+                  let filename = localUri.split("/").pop();
 
-                // Infer the type of the image
-                let match = /\.(\w+)$/.exec(filename);
-                let imgType = match ? `image/${match[1]}` : `image`;
-                const userId = await AsyncStorage.getItem("userId");
-                // Upload the image using the fetch and FormData APIs
-                let form = new FormData();
-                // Assume "photo" is the name of the form field the server expects
-                form.append("id", userId);
-                form.append("photo", {
-                  uri: localUri,
-                  name: filename,
-                  type: imgType,
-                });
-                // addImage(form, Toast, setImage, showMessage, setUploadStatus);
-                addPrescription(form, setImage, showMessage, setUploadStatus);
-              }}
-            />
+                  // Infer the type of the image
+                  let match = /\.(\w+)$/.exec(filename);
+                  let imgType = match ? `image/${match[1]}` : `image`;
+                  const userId = await AsyncStorage.getItem("userId");
+                  // Upload the image using the fetch and FormData APIs
+                  let form = new FormData();
+                  // Assume "photo" is the name of the form field the server expects
+                  form.append("id", userId);
+                  form.append("photo", {
+                    uri: localUri,
+                    name: filename,
+                    type: imgType,
+                  });
+                  form.append("type", type);
+                  // addImage(form, Toast, setImage, showMessage, setUploadStatus);
+                  addImage(form, setImage, showMessage, setUploadStatus);
+                }}
+              />
+            )}
           </View>
         </Card>
       ) : null}
@@ -229,7 +285,7 @@ const AddPrescriptionScreen = ({ navigation }) => {
   );
 };
 
-const takePicture = async (cameraReference, setImage, addPrescription) => {
+const takePicture = async (cameraReference, setImage, addImage) => {
   if (cameraReference) {
     let photo = await cameraReference.takePictureAsync({ quality: 0.3 });
     console.log(photo);
@@ -246,7 +302,7 @@ const takePicture = async (cameraReference, setImage, addPrescription) => {
   }
 };
 
-const pickImage = async (setImage, addPrescription) => {
+const pickImage = async (setImage, addImage) => {
   let result = await ImagePicker.launchImageLibraryAsync({
     mediaTypes: ImagePicker.MediaTypeOptions.All,
     allowsEditing: true,
@@ -309,10 +365,10 @@ const styles = StyleSheet.create({
   },
 });
 
-AddPrescriptionScreen.navigationOptions = (screenProps) => ({
-  title: "Docter Prescription",
+AddReportScreen.navigationOptions = (screenProps) => ({
+  title: "Docter Report",
   drawerIcon: ({ tintColor }) => (
     <MaterialCommunityIcons name="book-outline" color={tintColor} size={27} />
   ),
 });
-export default withNavigationFocus(AddPrescriptionScreen);
+export default withNavigationFocus(AddReportScreen);
