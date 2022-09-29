@@ -68,7 +68,7 @@
     "sharp-cli": "^1.13.1",
     "tiny-tfidf": "^0.9.1",
     "tiny-tfidf-node": "0.0.1",
-    "victory-native": "^34.1.0"
+    "victory-native": "^36.6.8"
   },
   "devDependencies": {
     "babel-preset-expo": "~8.0.0",
